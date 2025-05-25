@@ -1,4 +1,4 @@
-socket.emit : ony client get this (client will create this event)
+socket.emit : ony client get this (client will create this event, and only they will recieve it)
 
 socket.broadcast.emit: everyone other then client will get this (so client have creted this event, but him self want recieve it)
 io.emit: client will also recieve this
