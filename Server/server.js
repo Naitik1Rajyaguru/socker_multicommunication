@@ -8,11 +8,11 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-// app.use(express.static(path.join(__dirname, "../collaborative-editor/dist")));
+app.use(express.static(path.join(__dirname, "../client/dist")));
 
-// app.get("*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "../collaborative-editor/dist/index.html"));
-// });
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
+});
 
 let sharedText = "";
 let users = {};
