@@ -8,12 +8,18 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
+const PORT = process.env.PORT || 3000;
+
 // Serve static files from React
 app.use(express.static(path.join(__dirname, "../client/dist")));
 
 // All other routes go to React
 app.get((req, res) => {
   res.sendFile(path.join(__dirname, "../client/dist/index.html"));
+});
+
+app.get("/health", (req, res) => {
+  res.json({ status: "ok", timestamp: new Date().toISOString() });
 });
 
 let sharedText = "";
