@@ -18,8 +18,7 @@ function ChatBox(){
 
     const sendMessage =(e)=>{
         e.preventDefault();
-        if(!input.trim()) return
-        console.log(messages)
+        if(!input.trim()) return        
         socket.emit("send-chat", input);
         setInput('')
     }

@@ -8,9 +8,11 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
+// Serve static files from React
 app.use(express.static(path.join(__dirname, "../client/dist")));
 
-app.get("*", (req, res) => {
+// All other routes go to React
+app.get((req, res) => {
   res.sendFile(path.join(__dirname, "../client/dist/index.html"));
 });
 
@@ -26,7 +28,6 @@ io.on("connection", (socket) => {
   io.emit("update-users", Object.values(users));
 
   socket.on("send-chat", (msg) => {
-    console.log("got rge msg");
     io.emit("receive-chat", { user: users[socket.id], msg }); // receive chat is emiting object
   });
 
