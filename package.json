@@ -2,8 +2,7 @@
     "name": "collab-app-root",
     "private": true,
     "scripts": {
-        "install-all": "npm install --prefix Server && npm install --include=dev --prefix client",
-        "build": "npm run build --prefix client",
+        "setup": "npm install --prefix Server && npm install --include=dev --prefix client && npm run build --prefix client",
         "start": "node Server/server.js"
     }
 }

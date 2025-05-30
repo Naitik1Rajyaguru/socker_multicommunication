@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { socket } from "../socket";
+import { socket } from "../../../socket";
+import './UserList.css'
 
 function UserList(){
     const [users, setUsers] = useState([]);
@@ -16,9 +17,9 @@ function UserList(){
 
     return(
         <div>
-            <ul style={styles.list}>
+            <ul className="user-list">
             {users.map((user,index)=>(
-                <li key={index} style={styles.userItems}>
+                <li key={index} className="user-item">
                     👤 {user}
                 </li>
             ))}
@@ -27,17 +28,5 @@ function UserList(){
     )
 
 }
-
-const styles = {
-        list:{
-            listStyle: 'none',
-            padding: 0,
-            margin: 0,
-        },
-        userItems:{
-            padding: '4px 0',
-            borderBottom: '1px solid #ddd',
-        }
-    }
 
 export default UserList
