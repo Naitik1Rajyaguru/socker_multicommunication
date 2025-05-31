@@ -5,20 +5,33 @@ import Sidebar from "./components/sidebar/Sidebar";
 import './App.css'
 import { socket } from "./socket";
 import UserModal from "./components/usermodal/UserModal";
+import { getUser, setUser } from "./utils/storage";
 
 function App(){
 
-  const [userName, setUserName] = useState(sessionStorage.getItem("userName") || "")
+  const storedUserName = getUser('userName') || '';
+  const storeduserID = getUser("userID") || '';
 
-  // this is when the componenet get loads
+
+  const [userName, setUserName] = useState(storedUserName || "")
+  const [userID, setUserID] = useState(storeduserID || "")
+
+  function setUserData(name){
+    setUserName(name)
+    const newUserID = crypto.randomUUID()  
+    setUserID(newUserID)            
+    setUser("userID", newUserID)
+  }
+
+  // this is when the componenet chages somethng, so when UserModal join, something changes, so this will get called
   useEffect(()=>{
-    if(userName){
-      socket.emit("user-joined", userName)
+    if(userID){       
+      socket.emit("user-joined", {userName, userID})
     }
-  },[userName])
+  },[userName, userID])
 
   if(!userName){
-    return <UserModal onSubmit={setUserName}/>   // on submit it send user name, we use that here- data binding
+    return <UserModal onSubmit={setUserData}/>   // on submit it send user name, we use that here- data binding
   }
 
   return(

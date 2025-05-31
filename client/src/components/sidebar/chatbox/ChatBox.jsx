@@ -1,17 +1,16 @@
 import { useState, useEffect } from "react";
 import { socket } from "../../../socket";
 import './ChatBox.css'
+import { getUser } from "../../../utils/storage";
 
 function ChatBox(){
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('')
-    const userName = sessionStorage.getItem('userName'); 
+    const userName = getUser('userName') || '';
 
     useEffect(()=>{        
         socket.on("user-chat-history", (history)=>{
-            setMessages(history);
-            console.log(messages);
-            
+            setMessages(history);                      
         })
 
         socket.on("receive-chat", (data)=>{

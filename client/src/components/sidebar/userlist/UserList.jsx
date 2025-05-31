@@ -6,9 +6,10 @@ function UserList(){
     const [users, setUsers] = useState([]);
 
     useEffect(()=>{
-        socket.on("update-users", (userList)=>{
-            setUsers(userList)
-        })
+        socket.on("update-users", (userList) => {
+            setUsers(userList);
+        });
+
 
         return ()=>{
             socket.off("update-users")

@@ -1,29 +1,44 @@
-import { useState, useEffect } from "react";
-import {socket}  from '../../socket'
-import './Editor.css'
+import { useState, useEffect, useRef } from "react";
+import {socket}  from '../../socket';
+import './Editor.css';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
 
 function Editor(){
-    const [text, setText] = useState('');
+    const [data, setData] = useState('');
+    const dataRef = useRef(data);
 
     useEffect(()=>{
-        socket.on("update-text", (text)=>{
-            setText(text);
-        })        
+        dataRef.current = data;
+    }, [data])
+
+    useEffect(()=>{
+
+        socket.on("update-text", (incomingData)=>{   
+            if(dataRef.current!=incomingData){                        
+                setData(incomingData);   
+            }
+                 
+        })
+
         return()=>{
             socket.off("update-text")
         }
     }, [])
 
-    const handleChange = (e)=>{
-        const newText = e.target.value;
-        setText(newText);
-        socket.emit("edit-text", newText)
+    const handleChange = (event, editor)=>{
+        // const newText = e.target.value;
+        const newData = editor.getData();
+        setData(newData);
+        socket.emit("edit-text", newData)
     };
 
     return(
         <div className="editor-container">
             <h2>Collabrative Editor</h2>
-            <textarea name="" id="" value={text} onChange={handleChange} className="editor-textarea"></textarea>
+
+            <CKEditor editor={ClassicEditor} data={data} onChange={handleChange} />
         </div>
     )
     
