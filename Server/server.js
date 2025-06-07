@@ -64,11 +64,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    console.log(
-      `user disconnected: ${users[socket.id].userName}-${
-        users[socket.id].userID
-      }`
-    );
+    console.log(`user disconnected: ${users[socket.id]}`);
 
     // on refresh we dont want to delete history, but only on disconnect history will be deleted
     const user = users[socket.id];

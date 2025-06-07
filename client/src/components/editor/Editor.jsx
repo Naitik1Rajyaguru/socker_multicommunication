@@ -1,47 +1,46 @@
 import { useState, useEffect, useRef } from "react";
-import {socket}  from '../../socket';
-import './Editor.css';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { socket } from "../../socket";
+import "./Editor.css";
 
+function Editor() {
+  const [data, setData] = useState("");
+  const dataRef = useRef(data);  
 
-function Editor(){
-    const [data, setData] = useState('');
-    const dataRef = useRef(data);
+  useEffect(() => {
+    dataRef.current = data;
+  }, [data]);
 
-    useEffect(()=>{
-        dataRef.current = data;
-    }, [data])
-
-    useEffect(()=>{
-
-        socket.on("update-text", (incomingData)=>{   
-            if(dataRef.current!=incomingData){                        
-                setData(incomingData);   
-            }
-                 
-        })
-
-        return()=>{
-            socket.off("update-text")
-        }
-    }, [])
-
-    const handleChange = (event, editor)=>{
-        // const newText = e.target.value;
-        const newData = editor.getData();
-        setData(newData);
-        socket.emit("edit-text", newData)
+  useEffect(() => {
+    const handleIncomingData = (incomingData) => {
+      if (dataRef.current !== incomingData) {
+        console.log("Received update from socket");
+        setData(incomingData);
+      }
     };
 
-    return(
-        <div className="editor-container">
-            <h2>Collabrative Editor</h2>
+    socket.on("update-text", handleIncomingData);
 
-            <CKEditor editor={ClassicEditor} data={data} onChange={handleChange} />
-        </div>
-    )
-    
+    return () => {
+      socket.off("update-text", handleIncomingData);
+    };
+  }, []);
+
+  const handleChange = (e) => {
+    const newText = e.target.value;
+    setData(newText);
+    socket.emit("edit-text", newText);
+  };
+
+  return (
+    <div className="editor-container">
+      <h2>Collaborative Textarea Editor</h2>
+      <textarea
+        value={data}
+        onChange={handleChange}
+        placeholder="Start typing..."
+      />
+    </div>
+  );
 }
 
 export default Editor;

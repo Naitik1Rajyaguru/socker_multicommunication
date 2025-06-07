@@ -1,6 +1,13 @@
 .editor-container {
   flex: 1;
   padding: 2rem;
+  width: 200px;
+  height: 500px;
+}
+
+.editor-container textarea {
+  width: 500px;
+  height: 400px;
 }
 
 @media (max-width: 768px) {
