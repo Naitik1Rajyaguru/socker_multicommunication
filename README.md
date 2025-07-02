@@ -1,3 +1,13 @@
+**React Basic**
+- component is:
+function xyz (){
+    usestate : just variable state
+    useeffect(()=>{this run when data changed}, [which thing to watch])
+    const anyfuncnction=()=>{}
+    return `html`
+}
+
+
 **socket**
 socket.emit : ony client get this (client will create this event, and only they will recieve it)
 
