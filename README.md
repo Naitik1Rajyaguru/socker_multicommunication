@@ -37,7 +37,7 @@ function xyz() {
 }
 
 export default xyz;
-
+```
 
 **socket**
 socket.emit : ony client get this (client will create this event, and only they will recieve it)
