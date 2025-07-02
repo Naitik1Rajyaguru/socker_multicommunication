@@ -1,11 +1,42 @@
 **React Basic**
-- component is:
-function xyz (){
-    usestate : just variable state
-    useeffect(()=>{this run when data changed}, [which thing to watch])
-    const anyfuncnction=()=>{}
-    return `html`
+# XYZ Component
+
+## Description
+The `xyz` component is a React functional component that demonstrates basic usage of:
+- `useState` for managing local state
+- `useEffect` for running side effects when data changes
+- Custom functions
+- Returning JSX/HTML structure
+
+---
+
+## Component Structure
+
+```jsx
+import React, { useState, useEffect } from 'react';
+
+function xyz() {
+  // useState: Declare a state variable
+  const [state, setState] = useState(initialValue);
+
+  // useEffect: Runs when specified dependencies change
+  useEffect(() => {
+    // This code runs when 'data' changes
+  }, [data]); // 'data' is the dependency to watch
+
+  // Example of a custom function
+  const anyFunction = () => {
+    // Function logic here
+  };
+
+  return (
+    <div>
+      {/* Component's HTML/JSX goes here */}
+    </div>
+  );
 }
+
+export default xyz;
 
 
 **socket**
